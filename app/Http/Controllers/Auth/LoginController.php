@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Log;
 
 
 class LoginController extends Controller
@@ -44,6 +45,8 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        Log::useDailyFiles(storage_path() . '/logs/logins.log');
+        Log::info(Auth::user()->email.' has logged out');
         Auth::logout();
         return redirect('/login');
     }

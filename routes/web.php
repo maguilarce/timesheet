@@ -20,6 +20,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pending-approvals', 'TimesheetController@viewPendingApprovals')->name('viewpendingapprovals');
     Route::get('/view-global-time', 'TimesheetController@viewGlobalTime')->name('viewglobaltime');
     Route::get('/view-tutor-time', 'TimesheetController@viewTutorTime')->name('viewtutortime');
+    Route::get('/edit-tutor-time', 'TimesheetController@editTutorTime')->name('edittutortime');
+    Route::get('/edit-tutor-hours/{id?}', 'TimesheetController@editTutorHours');
     Route::get('/generate-global-report', 'TimesheetController@generateGlobalReport')->name('generateglobalreport');
     Route::get('/download-global-report', 'TimesheetController@downloadGlobalReport')->name('downloadglobalreport');
     Route::get('/generate-tutor-report', 'TimesheetController@generateTutorReport')->name('generatetutorreport');
@@ -33,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/deny-time', 'TimesheetController@denyTime')->name('denytime');
     Route::post('/approve-time', 'TimesheetController@approveTime')->name('approvetime');
     Route::post('/view-tutor-time-data', 'TimesheetController@viewTutorTimeData')->name('viewtutortimedata');
+    Route::post('/edit-tutor-time-data', 'TimesheetController@editTutorTimeData')->name('edittutortimedata');
     Route::post('/global-report', 'TimesheetController@globalReport')->name('globalreport');
 
 

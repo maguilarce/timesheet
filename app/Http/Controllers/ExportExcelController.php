@@ -47,7 +47,7 @@ class ExportExcelController extends Controller
 
         $data = json_decode(json_encode($data), true);
 
-        Excel::create('HCC_Online_Tutor_Timesheet_Global_Report_' . date("Y-m-d"), function ($excel) use ($data, $date_from, $date_to) {
+        Excel::create('HCC_Online_Tutor_Timesheet_Individual_Report_' . date("Y-m-d"), function ($excel) use ($data, $date_from, $date_to) {
             $excel->sheet('mySheet', function ($sheet) use ($data, $date_from, $date_to) {
                 $sheet->cell('A1', function ($cell) {
                     $cell->setFontWeight('bold');
@@ -55,7 +55,7 @@ class ExportExcelController extends Controller
                 });
                 $sheet->cell('A2', function ($cell) {
                     $cell->setFontWeight('bold');
-                    $cell->setValue('Tutoring Global Report');
+                    $cell->setValue('Tutoring Individual Report');
                 });
                 $sheet->cell('A3', function ($cell) use ($date_from, $date_to) {
                     $cell->setFontWeight('bold');
@@ -108,7 +108,7 @@ class ExportExcelController extends Controller
 
         $data = json_decode(json_encode($data), true);
 
-        Excel::create('HCC_Online_Tutor_Timesheet_Global_Report_' . date("Y-m-d"), function ($excel) use ($data, $date_from, $date_to) {
+        Excel::create('HCC_Online_Tutor_Timesheet_Individual_Report_' . date("Y-m-d"), function ($excel) use ($data, $date_from, $date_to) {
             $excel->sheet('mySheet', function ($sheet) use ($data, $date_from, $date_to) {
                 $sheet->cell('A1', function ($cell) {
                     $cell->setFontWeight('bold');
@@ -116,7 +116,7 @@ class ExportExcelController extends Controller
                 });
                 $sheet->cell('A2', function ($cell) {
                     $cell->setFontWeight('bold');
-                    $cell->setValue('Tutoring Global Report');
+                    $cell->setValue('Tutoring Individual Report');
                 });
                 $sheet->cell('A3', function ($cell) use ($date_from, $date_to) {
                     $cell->setFontWeight('bold');

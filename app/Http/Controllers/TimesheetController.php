@@ -25,8 +25,7 @@ class TimesheetController extends Controller
     }
     public function viewPendingApprovals()
     {
-        Log::useDailyFiles(storage_path() . '/logs/controllers.log');
-        Log::info('Testing logs ');
+        
         return view('admin.views.pending_approvals');
     }
     public function listPendingApprovals()
@@ -58,6 +57,58 @@ class TimesheetController extends Controller
     {
         $tutors = Users::where(["status" => "Active"])->orderBy('last_name', 'asc')->get();
         return view("admin.views.view_tutor_time", ["tutors" => $tutors, "tutors"]);
+    }
+    public function editTutorTime()
+    {
+        $tutors = Users::where(["status" => "Active"])->orderBy('last_name', 'asc')->get();
+        return view("admin.views.edit_tutor_time", ["tutors" => $tutors, "tutors"]);
+    }
+    public function editTutorTimeData(Request $request)
+    {
+        $tutor_id = $request->tutor;
+        $date_from = $request->datepicker1;
+        $date_to = $request->datepicker2;
+
+        $date_from_formatted = new Carbon($date_from);
+        $date_from_formatted = $date_from_formatted->toDateTimeString();
+        $date_to_formatted = new Carbon($date_to);
+        $date_to_formatted = $date_to_formatted->toDateTimeString();
+
+
+        $tutor_query = DB::table("timesheet")
+            ->select('*')
+            ->where('user_id', '=', $tutor_id)
+            ->where('date', '>=', $date_from_formatted)
+            ->where('date', '<=',  $date_to_formatted)
+            ->get();
+
+       
+        $user = DB::table("users")
+            ->select('*')
+            ->where('username', '=', $tutor_id)
+            ->get();
+
+        $date_from_formatted = new Carbon($date_from);
+        $date_from_formatted = $date_from_formatted->toFormattedDateString();
+        $date_to_formatted = new Carbon($date_to);
+        $date_to_formatted = $date_to_formatted->toFormattedDateString();
+        
+        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
+
+        return view("admin.views.view_edit_tutor_time", [
+            "hours" => $tutor_query,
+            "tutor_info" => $user,
+            "date_from" => $date_from_formatted,
+            "date_to" => $date_to_formatted,
+
+        ]);
+    }
+
+    public function editTutorHours($id = null)
+    {
+        $time = Timesheet::find($id);
+        return view("admin.views.edit_tutor_hours", ["time" => $time]);
     }
 
     public function generateGlobalReport()
@@ -112,7 +163,8 @@ class TimesheetController extends Controller
 
             //success message for the view
             $request->session()->flash("message", "Time has been addedd successfully"); //now we can collect this value in our html page
-
+            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::info(Auth::user()->email.' has added '.$timesheet->quantity.' hours for user: '.$timesheet->user_id);
             //finally, redirect to our html form
 
             return redirect("add-tutor-time");
@@ -129,6 +181,8 @@ class TimesheetController extends Controller
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Denied"]);
             echo json_encode(array("status" => 1, "message" => "Time Denied Successfully"));
+            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::info(Auth::user()->email.' has denied '.$timesheet->quantity.' hours for user: '.$timesheet->user_id);
         }
     }
 
@@ -143,6 +197,8 @@ class TimesheetController extends Controller
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Approved"]);
             echo json_encode(array("status" => 1, "message" => "Time Approved Successfully"));
+            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::info(Auth::user()->email.' has approved the time with id: '.$id);
         }
     }
 
@@ -305,6 +361,8 @@ class TimesheetController extends Controller
             $request->session()->flash("message", "Time has been addedd successfully"); //now we can collect this value in our html page
 
             //finally, redirect to our html form
+            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::info(Auth::user()->email.' has added '.$timesheet->quantity.' hours for his/her time');
 
             return redirect("add-time");
         }

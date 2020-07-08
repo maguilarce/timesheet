@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class AdminHomeController extends Controller
 {
@@ -12,6 +13,8 @@ class AdminHomeController extends Controller
     {
         //if (Auth::check()) {
         if (Auth::user()->isAdmin !== 2) {
+            Log::useDailyFiles(storage_path() . '/logs/logins.log');
+            Log::info(Auth::user()->email.' has logged in');
             return view("admin.views.dashboard");
         } else {
             return view("auth.passwords.changepassword");

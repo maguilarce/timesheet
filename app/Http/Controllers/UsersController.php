@@ -9,6 +9,7 @@ use DateTime;
 use Validator;
 use DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 use Auth;
 
 class UsersController extends Controller
@@ -81,6 +82,8 @@ class UsersController extends Controller
             $user->save();
 
             //success message for the view
+            Log::useDailyFiles(storage_path() . '/logs/users.log');
+            Log::info(Auth::user()->email.' has created a new user: '.$user->username);
             $request->session()->flash("message", "User has been addedd successfully"); //now we can collect this value in our html page
             return redirect("add-user");
         }
@@ -94,6 +97,8 @@ class UsersController extends Controller
 
         if (isset($user_data->id)) {
             $user_data->delete();
+            Log::useDailyFiles(storage_path() . '/logs/users.log');
+            Log::info(Auth::user()->email.' has deleted user with id: '.$id);
 
             echo json_encode(array("status" => 1, "message" => "User deleted successfully"));
         } else {
@@ -106,6 +111,7 @@ class UsersController extends Controller
     public function editUser($id = null)
     {
         $user = Users::find($id);
+        
 
         return view("admin.views.edit_user", ["user" => $user]);
     }
@@ -123,6 +129,8 @@ class UsersController extends Controller
         $user->status = $request->status;
         $user->save();
         $request->session()->flash("message", "User has been updated successfully");
+        Log::useDailyFiles(storage_path() . '/logs/users.log');
+        Log::info(Auth::user()->email.' has edited user: '.$user->email);
         return redirect('edit-user/' . $update_id);
     }
 

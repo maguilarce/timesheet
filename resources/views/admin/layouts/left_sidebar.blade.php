@@ -26,6 +26,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('addtutortime') }}"><i class="fa fa-calendar-plus-o"></i> <span>Add Tutor Time</span></a></li>
                     <li><a href="{{ route('viewtutortime') }}"><i class="fa fa-table"></i> <span>View Tutor Time</span></a></li>
+                    <li><a href="{{ route('edittutortime') }}"><i class="fa fa-pencil-square-o"></i> <span style="color:red;">Edit Tutor Time - UNDER CONSTRUCTION</span></a></li>
                     <li><a href="{{ route('generatetutorreport') }}"><i class="fa  fa-download"></i> <span>Download Tutor Report</span></a></li>
                 </ul>
               </li>

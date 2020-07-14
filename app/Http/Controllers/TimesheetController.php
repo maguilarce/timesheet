@@ -93,7 +93,7 @@ class TimesheetController extends Controller
         $date_to_formatted = new Carbon($date_to);
         $date_to_formatted = $date_to_formatted->toFormattedDateString();
         
-        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::useFiles(storage_path() . '/logs/timesheet.log');
         Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
 
         return view("admin.views.view_edit_tutor_time", [
@@ -163,7 +163,7 @@ class TimesheetController extends Controller
 
             //success message for the view
             $request->session()->flash("message", "Time has been addedd successfully"); //now we can collect this value in our html page
-            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has added '.$timesheet->quantity.' hours for user: '.$timesheet->user_id);
             //finally, redirect to our html form
 
@@ -181,7 +181,7 @@ class TimesheetController extends Controller
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Denied"]);
             echo json_encode(array("status" => 1, "message" => "Time Denied Successfully"));
-            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has denied '.$timesheet->quantity.' hours for user: '.$timesheet->user_id);
         }
     }
@@ -197,7 +197,7 @@ class TimesheetController extends Controller
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Approved"]);
             echo json_encode(array("status" => 1, "message" => "Time Approved Successfully"));
-            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has approved the time with id: '.$id);
         }
     }
@@ -339,7 +339,7 @@ class TimesheetController extends Controller
         $date_to_formatted = new Carbon($date_to);
         $date_to_formatted = $date_to_formatted->toFormattedDateString();
         
-        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::useFiles(storage_path() . '/logs/timesheet.log');
         Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
 
         return view("tutor.views.edit_tutor_hours", [
@@ -408,7 +408,7 @@ class TimesheetController extends Controller
             $request->session()->flash("message", "Time has been addedd successfully"); //now we can collect this value in our html page
 
             //finally, redirect to our html form
-            Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+            Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has added '.$timesheet->quantity.' hours for his/her time');
 
             return redirect("add-time");
@@ -481,7 +481,7 @@ class TimesheetController extends Controller
         $timesheet->explanation = $request->explanation;
         $timesheet->save();
         $request->session()->flash("message", "Time has been updated successfully");
-        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::useFiles(storage_path() . '/logs/timesheet.log');
         Log::info(Auth::user()->email.' has edited time with id: '.$update_id);
         return redirect('edit-tutor-hours2/' . $update_id);
         
@@ -504,7 +504,7 @@ class TimesheetController extends Controller
         $timesheet->explanation = $request->explanation;
         $timesheet->save();
         $request->session()->flash("message", "Time has been updated successfully");
-        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::useFiles(storage_path() . '/logs/timesheet.log');
         Log::info(Auth::user()->email.' has edited time with id: '.$update_id);
         return redirect('edit-tutor-hours/' . $update_id);
         

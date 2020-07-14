@@ -13,7 +13,8 @@ class AdminHomeController extends Controller
     {
         //if (Auth::check()) {
         if (Auth::user()->isAdmin !== 2) {
-            Log::useDailyFiles(storage_path() . '/logs/logins.log');
+            //Log::useDailyFiles(storage_path() . '/logs/logins.log');
+            Log::useFiles(storage_path() . '/logs/logins.log');
             Log::info(Auth::user()->email.' has logged in');
             return view("admin.views.dashboard");
         } else {

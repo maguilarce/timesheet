@@ -45,7 +45,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Log::useDailyFiles(storage_path() . '/logs/logins.log');
+        Log::useFiles(storage_path() . '/logs/logins.log');
         Log::info(Auth::user()->email.' has logged out');
         Auth::logout();
         return redirect('/login');

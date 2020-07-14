@@ -40,21 +40,10 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" id="frm-edit-tutor-time" method="post"  action="{{ route('edittutortimedata') }}">
+            <form role="form" id="frm-edit-tutor-time" method="post"  action="{{ route('edittutortimedata2') }}">
               {!! csrf_field() !!}
               <div class="box-body">
                 
-                <div class="form-group">
-                    <label for="tutor">Select a tutor</label>
-                    <select name="tutor" id="role" class="form-control">
-                            @if(count($tutors)>0)
-                                @foreach ($tutors as $index => $tutor)
-                                    <option value="{{$tutor->username}}">{{$tutor->last_name.", ".$tutor->first_name}}</option>
-                                @endforeach
-                            @endif
-
-                    </select>
-                </div>
                 <div class="form-group">
                         <label for="datepicker1">Select From Date</label>
                         <div class="input-group date">

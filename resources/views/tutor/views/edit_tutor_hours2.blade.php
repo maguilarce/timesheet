@@ -40,7 +40,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" id="frm-edit-tutor-time" method="post" action="{{ route('edittutorentry') }}" enctype="multipart/form-data">
+            <form role="form" id="frm-edit-tutor-time" method="post" action="{{ route('edittutorentry2') }}" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <input type="hidden" value="{{$time->id }}" name="update_id" />
               <div class="box-body">
@@ -158,18 +158,6 @@
                 <input class="form-control" type="text" name="explanation" id="explanation" value="{{$time->explanation}}">
               </div>
 
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select id="status" name="status"class="form-control">
-                            @if ($time->status === 'Approved' )
-                            <option value="Approved" selected>Approved</option>
-                            <option value="Denied">Denied</option>
-                            @else
-                            <option value="Approved" >Approved</option>
-                            <option value="Denied" selected>Denied</option>
-                            @endif
-                    </select>
-                </div>
           
               </div>
               <!-- /.box-body -->

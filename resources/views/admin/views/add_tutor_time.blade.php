@@ -61,7 +61,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" data-provide="datepicker" class="form-control pull-right" id="datepicker" name="datepicker">
+                    <input type="text" data-provide="datepicker" class="form-control pull-right datepicker" id="datepicker1" name="datepicker">
                   </div>
                 </div>
                 <div class="form-group">

@@ -21,7 +21,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/view-global-time', 'TimesheetController@viewGlobalTime')->name('viewglobaltime');
     Route::get('/view-tutor-time', 'TimesheetController@viewTutorTime')->name('viewtutortime');
     Route::get('/edit-tutor-time', 'TimesheetController@editTutorTime')->name('edittutortime');
+    Route::get('/edit-tutor-time2', 'TimesheetController@editTutorTime2')->name('edittutortime2');
     Route::get('/edit-tutor-hours/{id?}', 'TimesheetController@editTutorHours');
+    Route::get('/edit-tutor-hours2/{id?}', 'TimesheetController@editTutorHours2');
     Route::get('/generate-global-report', 'TimesheetController@generateGlobalReport')->name('generateglobalreport');
     Route::get('/download-global-report', 'TimesheetController@downloadGlobalReport')->name('downloadglobalreport');
     Route::get('/generate-tutor-report', 'TimesheetController@generateTutorReport')->name('generatetutorreport');
@@ -36,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/approve-time', 'TimesheetController@approveTime')->name('approvetime');
     Route::post('/view-tutor-time-data', 'TimesheetController@viewTutorTimeData')->name('viewtutortimedata');
     Route::post('/edit-tutor-time-data', 'TimesheetController@editTutorTimeData')->name('edittutortimedata');
+    Route::post('/edit-tutor-time-data2', 'TimesheetController@editTutorTimeData2')->name('edittutortimedata2');
     Route::post('/global-report', 'TimesheetController@globalReport')->name('globalreport');
 
 
@@ -63,4 +66,7 @@ Route::middleware(['auth'])->group(function () {
     //Timesheet data routes
     Route::post('/save-time', 'TimesheetController@saveTime')->name('tutorsavetime');
     Route::post('/view-time-data', 'TimesheetController@viewTimeData')->name('tutorviewtimedata');
+    Route::post('/edit-tutor-entry', 'TimesheetController@editTutorEntry')->name('edittutorentry');
+    Route::post('/edit-tutor-entry2', 'TimesheetController@editTutorEntry2')->name('edittutorentry2');
+
 });

@@ -51,7 +51,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" data-provide="datepicker" class="form-control pull-right" id="datepicker" name="datepicker">
+                    <input type="text" data-provide="datepicker" class="form-control pull-right" id="datepicker1" name="datepicker">
                   </div>
                 </div>
                 <div class="form-group">
@@ -68,14 +68,22 @@
                 <div class="form-group">
                         <label for="hours">Select Worked Hours</label>
                         <select id="hours" name="hours"class="form-control">
-                            <option value="0.5">0.5 hour</option>
-                            <option value="1">1 hour</option>
-                            <option value="1.5">1.5 hours</option>
-                            <option value="2">2 hours</option>
-                            <option value="2.5">2.5 hours</option>
-                            <option value="3">3 hours</option>
-                            <option value="3.5">3.5 hours</option>
-                            <option value="4">4 hours</option>
+                          <option value="0.5">0.5 hour</option>
+                          <option value="1">1 hour</option>
+                          <option value="1.5">1.5 hours</option>
+                          <option value="2">2 hours</option>
+                          <option value="2.5">2.5 hours</option>
+                          <option value="3">3 hours</option>
+                          <option value="3.5">3.5 hours</option>
+                          <option value="4">4 hours</option>
+                          <option value="4.5">4.5 hours</option>
+                          <option value="5">5 hours</option>
+                          <option value="5.5">5.5 hours</option>
+                          <option value="6">6 hours</option>
+                          <option value="6.5">6.5 hours</option>
+                          <option value="7">7 hours</option>
+                          <option value="7.5">7.5 hours</option>
+                          <option value="8">8 hours</option>
                         </select>
                     </div>
                 

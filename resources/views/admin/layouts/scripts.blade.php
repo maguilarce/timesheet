@@ -221,8 +221,16 @@
         });
         });
         </script>
-        <script>
-           
+ <script type="text/javascript">
+  $(function () {
+var date = new Date();
+date.setDate(date.getDate());
 
-        </script>
+      $('#datepicker1').datepicker({
+endDate: date,
+      });
+//$('#datepicker1').datepicker("setDate", new Date());
+  });
+  
+</script>
    

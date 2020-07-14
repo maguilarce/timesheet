@@ -310,6 +310,53 @@ class TimesheetController extends Controller
         return view("tutor.views.view_tutor_time");
     }
 
+    public function editTutorTime2()
+    {
+        return view("tutor.views.edit_tutor_time");
+    }
+    public function editTutorTimeData2(Request $request)
+    {
+        $tutor_id = Auth::user()->username;   
+        $date_from = $request->datepicker1;
+        $date_to = $request->datepicker2;
+
+        $date_from_formatted = new Carbon($date_from);
+        $date_from_formatted = $date_from_formatted->toDateTimeString();
+        $date_to_formatted = new Carbon($date_to);
+        $date_to_formatted = $date_to_formatted->toDateTimeString();
+
+
+        $tutor_query = DB::table("timesheet")
+            ->select('*')
+            ->where('user_id', '=', $tutor_id)
+            ->where('date', '>=', $date_from_formatted)
+            ->where('date', '<=',  $date_to_formatted)
+            ->where('status', '<>',  'Approved')
+            ->get();
+
+        $date_from_formatted = new Carbon($date_from);
+        $date_from_formatted = $date_from_formatted->toFormattedDateString();
+        $date_to_formatted = new Carbon($date_to);
+        $date_to_formatted = $date_to_formatted->toFormattedDateString();
+        
+        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
+
+        return view("tutor.views.edit_tutor_hours", [
+            "hours" => $tutor_query,
+            "tutor_info" => $tutor_id,
+            "date_from" => $date_from_formatted,
+            "date_to" => $date_to_formatted,
+
+        ]);
+    }
+
+    public function editTutorHours2($id = null)
+    {
+        $time = Timesheet::find($id);
+        return view("tutor.views.edit_tutor_hours2", ["time" => $time]);
+    }
+
 
 
     public function generateReport()
@@ -385,7 +432,7 @@ class TimesheetController extends Controller
             ->where('user_id', '=', $tutor_id)
             ->where('date', '>=', $date_from_formatted)
             ->where('date', '<=',  $date_to_formatted)
-            ->where('status', '=',  'Approved')
+           // ->where('status', '=',  'Approved')
             ->get();
 
         $total_times = DB::table('timesheet')
@@ -396,7 +443,7 @@ class TimesheetController extends Controller
             ->where('user_id', '=', $tutor_id)
             ->where('date', '>=', $date_from_formatted)
             ->where('date', '<=', $date_to_formatted)
-            ->where('status', '=', 'Approved')
+            //->where('status', '=', 'Approved')
             ->groupBy('timesheet.user_id')
             ->get();
 
@@ -417,5 +464,50 @@ class TimesheetController extends Controller
             "date_to" => $date_to_formatted,
             "total_times" => $total_times
         ]);
+    }
+
+    public function editTutorEntry2(Request $request)
+    {
+        $update_id =  $request->update_id;
+        $timesheet = Timesheet::find($update_id);
+        //transforming date to mysql format
+        $date = $request->date;
+        $date = new DateTime($date);
+        $date = $date->format('Y-m-d');
+        $timesheet->date = $date;
+        $timesheet->type = $request->type;
+        $timesheet->quantity = $request->quantity;
+        //status is changed only by the admin...
+        $timesheet->explanation = $request->explanation;
+        $timesheet->save();
+        $request->session()->flash("message", "Time has been updated successfully");
+        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::info(Auth::user()->email.' has edited time with id: '.$update_id);
+        return redirect('edit-tutor-hours2/' . $update_id);
+        
+
+    }
+
+    public function editTutorEntry(Request $request)
+    {
+        $update_id =  $request->update_id;
+        $timesheet = Timesheet::find($update_id);
+        //transforming date to mysql format
+        $date = $request->date;
+        $date = new DateTime($date);
+        $date = $date->format('Y-m-d');
+        $timesheet->date = $date;
+        $timesheet->type = $request->type;
+        $timesheet->quantity = $request->quantity;
+        //status is changed only by the admin...
+        $timesheet->status = $request->status;
+        $timesheet->explanation = $request->explanation;
+        $timesheet->save();
+        $request->session()->flash("message", "Time has been updated successfully");
+        Log::useDailyFiles(storage_path() . '/logs/timesheet.log');
+        Log::info(Auth::user()->email.' has edited time with id: '.$update_id);
+        return redirect('edit-tutor-hours/' . $update_id);
+        
+
     }
 }

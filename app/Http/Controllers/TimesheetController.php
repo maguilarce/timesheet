@@ -510,4 +510,17 @@ class TimesheetController extends Controller
         
 
     }
+
+    public function deleteTutorEntry($id = null)
+    {
+
+        $time = Timesheet::find($id)->delete();
+
+        return view("tutor.views.edit_tutor_time", ["message" => "Time deleted successfully"]);
+        //return redirect('edittutortimedata')->with('message', 'Time deleted successfully');   
+
+    
+
+    }
+
 }

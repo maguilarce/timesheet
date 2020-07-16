@@ -21,6 +21,7 @@
 
         <div class="col-md-12 table-responsive">
                 <div class="box box-primary table-responsive">
+                 
                   <div class="box-header with-border">
                         <h3><strong>Edit Tutor Time</strong></h3>
                   </div>
@@ -59,8 +60,8 @@
                                         <td>{{$entry->quantity}}</td>
                                         <td>{{$entry->status}}</td>
                                         <td>
-                                        <a href="{{url('edit-tutor-hours2/'.$entry->id)}}" class="btn btn-warning">Edit</a>
-                                            <a href="javascript:void(0)" class="btn btn-danger">Delete</a>
+                                            <a href="{{url('edit-tutor-hours2/'.$entry->id)}}" class="btn btn-warning">Edit</a>
+                                            <a href="{{url('delete-tutor-entry/'.$entry->id)}}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     

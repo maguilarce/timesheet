@@ -21,6 +21,13 @@
 
         <div class="col-md-12 table-responsive">
                 <div class="box box-primary table-responsive">
+                  @if (\Session::has('message'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('message') !!}</li>
+        </ul>
+    </div>
+@endif
                   <div class="box-header with-border">
                         <h3><strong>Edit Tutor Time</strong></h3>
                   </div>
@@ -60,7 +67,7 @@
                                         <td>{{$entry->status}}</td>
                                         <td>
                                         <a href="{{url('edit-tutor-hours/'.$entry->id)}}" class="btn btn-warning">Edit</a>
-                                            <a href="javascript:void(0)" class="btn btn-danger">Delete</a>
+                                        <a href="{{url('delete-tutor-entry/'.$entry->id)}}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     
@@ -69,7 +76,7 @@
                             
                   
                           </table>
-                          <p style="color:red;">Notice: This Report is based on Approved Time Only</p>
+                 
                 </div>
         </div>
 

@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/global-report', 'TimesheetController@globalReport')->name('globalreport');
 
 
+
     //Users view routes
     Route::get('/manage-users', 'UsersController@viewUsers')->name('manageusers');
     Route::get('/add-user', 'UsersController@addUser')->name('adduser');
@@ -68,5 +69,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/view-time-data', 'TimesheetController@viewTimeData')->name('tutorviewtimedata');
     Route::post('/edit-tutor-entry', 'TimesheetController@editTutorEntry')->name('edittutorentry');
     Route::post('/edit-tutor-entry2', 'TimesheetController@editTutorEntry2')->name('edittutorentry2');
+    Route::get('/delete-tutor-entry/{id}', 'TimesheetController@deleteTutorEntry');
 
 });

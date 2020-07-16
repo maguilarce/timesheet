@@ -21,6 +21,11 @@
     <div class="row">
         <div class="col-md-12">
         <div class="box box-primary">
+          @if (!empty($message))
+          <div class="alert alert-success">
+            <p>{{ $message }}</p>
+          </div>
+      @endif
           @if (session()->has("message"))
               <div class="alert alert-success">
                 <p>{{ session("message") }}</p>
@@ -67,7 +72,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">View Tutor Time</button>
+                <button type="submit" class="btn btn-primary">Edit Tutor Time</button>
               </div>
             </form>
           </div>

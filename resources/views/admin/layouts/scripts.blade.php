@@ -112,7 +112,7 @@
     <script>
         $(function(){
           $(document).on("click",".pending-approvals-deny",function(){
-            var conf = confirm("Are you sure you want to approve this time?");
+            var conf = confirm("Are you sure you want to deny this time?");
             if(conf)
             {
               var deny_id = $(this).attr("data-id");
@@ -233,4 +233,14 @@ endDate: date,
   });
   
 </script>
+<!-- Fading messages -->
+<script>
+  $(document).ready(function () {
+      window.setTimeout(function () {
+          $(".alert").fadeTo(500, 0).slideUp(500, function () {
+              $(this).remove();
+              });
+          }, 2400);
+      });
+  </script>
    

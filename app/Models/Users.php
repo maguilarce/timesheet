@@ -29,6 +29,7 @@ class Users extends Model implements
         'first_name',
         'last_name',
         'email',
+        'password_changed_at'
 
 
     ];

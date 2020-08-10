@@ -67,7 +67,7 @@
                                         <td>{{$entry->status}}</td>
                                         <td>
                                         <a href="{{url('edit-tutor-hours/'.$entry->id)}}" class="btn btn-warning">Edit</a>
-                                        <a href="{{url('delete-tutor-entry/'.$entry->id)}}" class="btn btn-danger">Delete</a>
+                                        <a href="{{url('delete-tutor-entry/'.$entry->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this time entry?');">Delete</a>
                                         </td>
                                     </tr>
                                     

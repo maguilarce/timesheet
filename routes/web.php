@@ -13,8 +13,14 @@ Route::post('/forgot-password', 'UsersController@forgotPassword')->name('forgotp
 
 Route::middleware(['auth'])->group(function () {
 
+    //reset password routes
+    Route::get('password/expired', 'Auth\ExpiredPasswordController@expired')->name('password.expired');
+    Route::post('password/post_expired', 'Auth\ExpiredPasswordController@postExpired')->name('password.post_expired');
+    /////////////////////
 
-    Route::get('/', "AdminHomeController@dashboard")->name('home');
+    
+        Route::middleware(['password_expired'])->group(function () {
+            Route::get('/', "AdminHomeController@dashboard")->name('home');
     //Timesheet view routes
     Route::get('/add-tutor-time', 'TimesheetController@addTutorTime')->name('addtutortime');
     Route::get('/pending-approvals', 'TimesheetController@viewPendingApprovals')->name('viewpendingapprovals');
@@ -71,4 +77,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/edit-tutor-entry2', 'TimesheetController@editTutorEntry2')->name('edittutorentry2');
     Route::get('/delete-tutor-entry/{id}', 'TimesheetController@deleteTutorEntry');
 
+    //emailing
+
+    Route::get('sendbasicemail','MailController@basic_email');
+    Route::get('sendhtmlemail','MailController@html_email');
+    Route::get('sendattachmentemail','MailController@attachment_email');
+        });
+    
+
 });
+

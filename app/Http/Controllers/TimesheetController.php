@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth;
+use Mail;
 
 
 class TimesheetController extends Controller
@@ -175,15 +176,31 @@ class TimesheetController extends Controller
     {
         $id = $request->deny_id;
         $timesheet = Timesheet::find($id);
+        
+        $user_email = DB::table('users')->where('username', $timesheet->user_id)->value('email');
+        $first_name = DB::table('users')->where('username', $timesheet->user_id)->value('first_name');
+       
+
+       
 
         if (isset($timesheet->id)) {
             $timesheet_query = DB::table("timesheet")
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Denied"]);
+                //sending email
+        $data = array('name'=>$first_name,'status'=>'denied','hours'=>$timesheet->quantity,'date'=>$timesheet->date);
+        
+        
+        Mail::send('mail', $data, function($message) use($user_email) {
+            $message->to($user_email, 'Tutorials Point')->subject('Your recent time entry has been denied');
+            $message->from('tutoring.system@hccs.edu','HCC Online Tutoring Payroll System');
+         });
             echo json_encode(array("status" => 1, "message" => "Time Denied Successfully"));
             Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has denied '.$timesheet->quantity.' hours for user: '.$timesheet->user_id);
         }
+        
+
     }
 
 
@@ -191,11 +208,19 @@ class TimesheetController extends Controller
     {
         $id = $request->approve_id;
         $timesheet = Timesheet::find($id);
+        $user_email = DB::table('users')->where('username', $timesheet->user_id)->value('email');
+        $first_name = DB::table('users')->where('username', $timesheet->user_id)->value('first_name');
 
         if (isset($timesheet->id)) {
             $timesheet_query = DB::table("timesheet")
                 ->where('id', $timesheet->id)
                 ->update(['status' => "Approved"]);
+                 //sending email
+        $data = array('name'=>$first_name,'status'=>'approved','hours'=>$timesheet->quantity,'date'=>$timesheet->date);
+        Mail::send('mail', $data, function($message) use($user_email) {
+            $message->to($user_email, 'HCC Online Tutoring Payroll System')->subject('Your recent time entry has been approved');
+            $message->from('tutoring.system@hccs.edu','HCC Online Tutoring Payroll System');
+         });
             echo json_encode(array("status" => 1, "message" => "Time Approved Successfully"));
             Log::useFiles(storage_path() . '/logs/timesheet.log');
             Log::info(Auth::user()->email.' has approved the time with id: '.$id);
@@ -515,11 +540,15 @@ class TimesheetController extends Controller
     {
 
         $time = Timesheet::find($id)->delete();
-
-        return view("tutor.views.edit_tutor_time", ["message" => "Time deleted successfully"]);
-        //return redirect('edittutortimedata')->with('message', 'Time deleted successfully');   
-
-    
+        if(Auth::user()->isAdmin=="1")
+        {
+            $tutors = Users::where(["status" => "Active"])->orderBy('last_name', 'asc')->get();
+            return view("admin.views.edit_tutor_time", ["tutors" => $tutors, "message" => "Time deleted successfully"]);
+        }
+        else {
+            return view("tutor.views.edit_tutor_time", ["message" => "Time deleted successfully"]);
+        }
+            
 
     }
 

@@ -43,7 +43,11 @@
             <form role="form" id="frm-edit-tutor-time" method="post"  action="{{ route('edittutortimedata') }}">
               {!! csrf_field() !!}
               <div class="box-body">
-                
+                @if (!empty($message))
+                  <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                  </div>
+                @endif
                 <div class="form-group">
                     <label for="tutor">Select a tutor</label>
                     <select name="tutor" id="role" class="form-control">

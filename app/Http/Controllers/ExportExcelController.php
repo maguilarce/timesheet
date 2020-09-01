@@ -42,6 +42,7 @@ class ExportExcelController extends Controller
             ->where('timesheet.status', '=', 'Approved')
             ->groupBy('timesheet.user_id')
             ->groupBy('timesheet.date')
+            //->orderBy('timesheet.date', 'asc')
             ->get()->toArray();
 
 
@@ -104,6 +105,8 @@ class ExportExcelController extends Controller
             ->where('timesheet.user_id', '=', $tutor)
             ->groupBy('timesheet.user_id')
             ->groupBy('timesheet.date')
+            //->orderBy('timesheet.date', 'asc')
+            
             ->get()->toArray();
 
         $data = json_decode(json_encode($data), true);

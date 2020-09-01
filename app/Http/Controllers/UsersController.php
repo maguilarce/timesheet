@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Log;
 use Auth;
+use Mail;
 
 class UsersController extends Controller
 {
@@ -84,6 +85,11 @@ class UsersController extends Controller
             //success message for the view
             Log::useFiles(storage_path() . '/logs/users.log');
             Log::info(Auth::user()->email.' has created a new user: '.$user->username);
+            $user_email = $user->email;
+            /*Mail::send('mail2', function($message) use($user_email) {
+                $message->to($user_email, 'HCC Online Tutoring Payroll System')->subject('Your user has been created');
+                $message->from('tutoring.system@hccs.edu','HCC Online Tutoring Payroll System');
+             });*/
             $request->session()->flash("message", "User has been addedd successfully"); //now we can collect this value in our html page
             return redirect("add-user");
         }

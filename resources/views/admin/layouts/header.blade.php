@@ -29,7 +29,8 @@
               <li class="user-header"  >
                
               
-                      <a style="color:white !important;" role="button" href="{{ route('logout') }}" class="btn btn-danger">Sign out</a>
+                      <a style="color:white !important;" role="button" href="{{ route('logout') }}" class="btn btn-danger">Sign out</a><br>
+                      <a style="color:white !important;" href="mailto:manuel.aguilar2@hccs.edu?subject=Tutoring Payroll App Inquiry&cc=deborah.hardwick@hccs.edu" class="btn btn-success">Send an inquiry</a>
                   
               </li>
              

@@ -164,9 +164,15 @@
                             @if ($time->status === 'Approved' )
                             <option value="Approved" selected>Approved</option>
                             <option value="Denied">Denied</option>
-                            @else
+                            <option value="Pending Approval">Pending Approval</option>
+                            @elseif ($time->status === 'Denied' )
                             <option value="Approved" >Approved</option>
                             <option value="Denied" selected>Denied</option>
+                            <option value="Pending Approval">Pending Approval</option>
+                            @elseif ($time->status === 'Pending Approval' )
+                            <option value="Approved" >Approved</option>
+                            <option value="Denied">Denied</option>
+                            <option value="Pending Approval" selected>Pending Approval</option>
                             @endif
                     </select>
                 </div>

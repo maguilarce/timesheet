@@ -21,7 +21,7 @@ class UsersController extends Controller
         return view('admin.views.view_users');
     }
 
-    public function listUsers()
+    /*public function listUsers()
     {
         return Datatables::queryBuilder(
             DB::table('users')
@@ -34,6 +34,22 @@ class UsersController extends Controller
             })
             ->rawColumns(["action_btns"])
             ->make(true);
+    }*/
+
+    public function listUsers()
+    {
+        $users =  DB::table('users')
+        ->select('*')
+        ->where('status', '<>', 'Inactive')
+        ->get();
+
+        return Datatables::of($users)
+        ->editColumn("action_btns", function ($users) {
+            return '<a href="' . URL::to('/edit-user/' . $users->id) . '" class="btn btn-success edit-user" data-id="' . $users->id . '">Edit</a>
+                    <a href="javascript:void(0)" class="btn btn-danger delete-user" data-id="' . $users->id . '">Delete</a>';
+        })
+        ->rawColumns(["action_btns"])
+        ->make(true);
     }
 
 

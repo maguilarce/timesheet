@@ -29,7 +29,7 @@ class TimesheetController extends Controller
         
         return view('admin.views.pending_approvals');
     }
-    public function listPendingApprovals()
+    /*public function listPendingApprovals()
     {
         return Datatables::queryBuilder(
             DB::table('timesheet')
@@ -42,6 +42,23 @@ class TimesheetController extends Controller
             })
             ->rawColumns(["action_btns"])
             ->make(true);
+    }*/
+
+    public function listPendingApprovals()
+    {
+        $timesheet =  DB::table('timesheet')
+        ->select('*')
+        ->where('status', '=', 'Pending Approval')
+        ->get();
+
+        return Datatables::of($timesheet)
+        ->editColumn("action_btns", function ($timesheet) {
+            return '<a href="#" class="btn btn-success pending-approvals-approve" data-id="' . $timesheet->id . '">Approve</a>
+                    <a href="javascript:void(0)" class="btn btn-danger pending-approvals-deny" data-id="' . $timesheet->id . '">Deny</a>';
+        })
+        ->rawColumns(["action_btns"])
+        ->make(true);
+
     }
 
     public function listGlobalTime()
@@ -94,8 +111,8 @@ class TimesheetController extends Controller
         $date_to_formatted = new Carbon($date_to);
         $date_to_formatted = $date_to_formatted->toFormattedDateString();
         
-        Log::useFiles(storage_path() . '/logs/timesheet.log');
-        Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
+        //Log::useFiles(storage_path() . '/logs/timesheet.log');
+        //Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
 
         return view("admin.views.view_edit_tutor_time", [
             "hours" => $tutor_query,
@@ -364,8 +381,8 @@ class TimesheetController extends Controller
         $date_to_formatted = new Carbon($date_to);
         $date_to_formatted = $date_to_formatted->toFormattedDateString();
         
-        Log::useFiles(storage_path() . '/logs/timesheet.log');
-        Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
+        //Log::useFiles(storage_path() . '/logs/timesheet.log');
+        //Log::info(Auth::user()->email.' has created a edit the time of user: '.$tutor_id);
 
         return view("tutor.views.edit_tutor_hours", [
             "hours" => $tutor_query,

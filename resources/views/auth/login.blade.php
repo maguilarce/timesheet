@@ -54,6 +54,7 @@
                 </div>
             </div>
         </form>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         
             <!-- /.col -->
           </div>

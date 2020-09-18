@@ -20,9 +20,16 @@
   <section class="content">
     <!-- Small boxes (Stat box) -->
     <div>
-      <h1>Welcome, <strong>  {{Auth::user()->first_name}}!
+      <h1>Welcome, <strong>  {{Auth::user()->first_name}}
         </strong></h1>
-      <h3>Please navigate through left menu sidebar to select your options</h3>
+      <h3>Please navigate through left menu sidebar to select your options!</h3>
+
+      @foreach ($allowable_hours as $hours )
+      
+      <h3 style="color: green;"><b>Allowable hours for this month: {{$hours->allowable_hours}}</b></h3>
+     
+
+@endforeach
     </div>
 
 

@@ -6,6 +6,9 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\AllowableTime;
+use Carbon\Carbon;
+use DB;
 
 class AdminHomeController extends Controller
 {
@@ -16,7 +19,15 @@ class AdminHomeController extends Controller
             //Log::useDailyFiles(storage_path() . '/logs/logins.log');
             Log::useFiles(storage_path() . '/logs/logins.log');
             Log::info(Auth::user()->email.' has logged in');
-            return view("admin.views.dashboard");
+            
+            $allowable =  DB::table('allowable-time')
+            ->select('*')
+            ->where('month', '=', DB::raw('month(current_date())'))
+            ->get();
+
+
+            return view("admin.views.dashboard",[
+                "allowable_hours" => $allowable]);
         } else {
             return view("auth.passwords.changepassword");
         }
